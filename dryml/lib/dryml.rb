@@ -124,7 +124,7 @@ module Dryml
                        view._pick_template(page + ".dryml").filename
                      end
         mtime = File.mtime(filename)
-        renderer_class = @renderer_classes[page]
+        renderer_class = @renderer_classes[filename]
 
         # do we need to recompile?
         if (!renderer_class ||                                          # nothing cached?
@@ -133,7 +133,7 @@ module Dryml
           renderer_class = make_renderer_class(File.read(filename), filename, local_names,
                                                DEFAULT_IMPORTS, included_taglibs)
           renderer_class.load_time = mtime
-          @renderer_classes[page] = renderer_class
+          @renderer_classes[filename] = renderer_class
         end
         renderer_class.new(page, view)
       end
